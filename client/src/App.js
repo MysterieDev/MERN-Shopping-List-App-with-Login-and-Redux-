@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { Container, Header, Icon } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
+import "./components/AppNavbar";
+import AppNavbar from "./components/AppNavbar";
 
 class App extends Component {
   render() {
@@ -10,10 +12,7 @@ class App extends Component {
     };
     return (
       <Container text style={containerStyle}>
-        <Header as="h2">
-          <Icon name="shopping cart" />
-          <Header.Content>Shopping List</Header.Content>
-        </Header>
+        <AppNavbar />
         <h1> Hello </h1>
       </Container>
     );
