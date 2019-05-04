@@ -1,0 +1,16 @@
+.fade-enter {
+color:black;
+
+}
+.fade-enter-active {
+color: pink;
+transition: color 2000ms ease-in;
+}
+.fade-exit {
+  color:pink;
+  
+  }
+  .fade-exit-active {
+  color: black;
+  transition: color 2000ms ease-out;
+  }

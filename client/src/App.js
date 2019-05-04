@@ -4,6 +4,7 @@ import "semantic-ui-css/semantic.min.css";
 import { Container } from "semantic-ui-react";
 import "./components/AppNavbar";
 import AppNavbar from "./components/AppNavbar";
+import ShoppingList from "./components/ShoppingList";
 
 class App extends Component {
   render() {
@@ -11,10 +12,10 @@ class App extends Component {
       paddingTop: "50px"
     };
     return (
-      <Container text style={containerStyle}>
+      <React.Fragment>
         <AppNavbar />
-        <h1> Hello </h1>
-      </Container>
+        <ShoppingList />
+      </React.Fragment>
     );
   }
 }
