@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Dropdown, Icon, Menu } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 class AppNavbar extends Component {
   state = {};
