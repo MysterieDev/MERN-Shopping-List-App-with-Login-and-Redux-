@@ -12,7 +12,6 @@ class AppNavbar extends Component {
             <Dropdown.Menu>
               <Dropdown.Item>Home</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item>Save...</Dropdown.Item>
               <Dropdown.Item
                 href="https://github.com/MysterieDev"
                 target="_blank"

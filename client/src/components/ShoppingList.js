@@ -23,8 +23,8 @@ class ShoppingList extends Component {
         <ItemModal />
         <List ordered>
           <TransitionGroup>
-            {items.map(({ id, name }) => (
-              <CSSTransition key={id} timeout={500} classNames="fade">
+            {items.map(({ _id, name }) => (
+              <CSSTransition key={_id} timeout={500} classNames="fade">
                 <List.Item as="p">
                   <Button
                     negative
@@ -34,7 +34,7 @@ class ShoppingList extends Component {
                       paddingRight: "5px",
                       fontSize: "10px"
                     }}
-                    onClick={this.onDeleteClick.bind(this, id)}
+                    onClick={this.onDeleteClick.bind(this, _id)}
                   />
                   {name}
                 </List.Item>
