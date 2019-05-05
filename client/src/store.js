@@ -4,26 +4,13 @@ import rootReducer from "./reducers";
 
 const initialState = {};
 
-const middleware = [thunk];
+const middleWare = [thunk];
 
-// Only chrome can handle the redux dev tool
-// redux compose cannot handle a null or undefined middleware
-if (window.navigator.userAgent.includes("Chrome")) {
-  var store = createStore(
-    rootReducer,
-    initialState,
-    compose(
-      applyMiddleware(...middleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-  );
-} else {
-  var store = createStore(
-    rootReducer,
-    initialState,
-    compose(applyMiddleware(...middleware))
-  );
-}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  rootReducer,
+  initialState,
+  composeEnhancers(applyMiddleware(...middleWare))
+);
 
 export default store;
