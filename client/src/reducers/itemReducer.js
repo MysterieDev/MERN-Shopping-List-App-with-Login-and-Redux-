@@ -32,6 +32,6 @@ export default function(state = intialState, action) {
         items: state.items.filter(item => item.id !== action.payload)
       };
     default:
-      return state;
+      return { ...state };
   }
 }
