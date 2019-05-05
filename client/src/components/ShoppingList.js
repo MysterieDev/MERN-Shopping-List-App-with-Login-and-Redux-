@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Container, Button, List, Icon } from "semantic-ui-react";
+import { Container, Button, List } from "semantic-ui-react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import uuid from "uuid";
 import { connect } from "react-redux";
-import { getItems } from "../actions/itemActions";
+import { getItems, deleteItem } from "../actions/itemActions";
 import { PropTypes } from "prop-types";
 
 class ShoppingList extends Component {
@@ -11,26 +10,15 @@ class ShoppingList extends Component {
     this.props.getItems();
   }
 
+  onDeleteClick = id => {
+    this.props.deleteItem(id);
+  };
+
   render() {
     const { items } = this.props.item;
 
     return (
       <Container>
-        <Button
-          style={{ margin: "10px" }}
-          primary
-          onClick={() => {
-            const name = prompt("Enter Item");
-            if (name) {
-              this.setState(state => ({
-                items: [...state.items, { id: uuid(), name }]
-              }));
-            }
-          }}
-        >
-          Add Item
-        </Button>
-
         <List ordered>
           <TransitionGroup>
             {items.map(({ id, name }) => (
@@ -44,11 +32,7 @@ class ShoppingList extends Component {
                       paddingRight: "5px",
                       fontSize: "10px"
                     }}
-                    onClick={() => {
-                      this.setState(state => ({
-                        items: state.items.filter(item => item.id !== id)
-                      }));
-                    }}
+                    onClick={this.onDeleteClick.bind(this, id)}
                   />
                   {name}
                 </List.Item>
@@ -72,7 +56,9 @@ const mapStatetoProps = state => ({
   item: state.item
 });
 
+const mapDispatchToProps = { deleteItem, getItems };
+
 export default connect(
   mapStatetoProps,
-  { getItems }
+  mapDispatchToProps
 )(ShoppingList);
