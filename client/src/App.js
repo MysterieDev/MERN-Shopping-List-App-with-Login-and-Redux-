@@ -8,8 +8,12 @@ import ShoppingList from "./components/ShoppingList";
 import { Provider } from "react-redux";
 //Importing file store.js
 import store from "./store";
+import { loadUser } from "./actions/authActions";
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
   render() {
     return (
       <Provider store={store}>
