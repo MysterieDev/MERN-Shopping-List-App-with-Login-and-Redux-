@@ -32,7 +32,7 @@ class ItemModal extends Component {
       <Modal
         trigger={
           <Button
-            color="secondary"
+            color="black"
             onClick={this.handleOpen}
             style={{ margin: "10px" }}
           >
