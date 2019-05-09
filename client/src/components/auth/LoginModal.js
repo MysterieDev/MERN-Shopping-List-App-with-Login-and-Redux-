@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { Button, Modal, Form, Dropdown, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { register } from "../../actions/authActions";
+import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 
-class RegisterModal extends Component {
-  state = { modalOpen: false, name: "", email: "", password: "", msg: null };
+class LoginModal extends Component {
+  state = { modalOpen: false, email: "", password: "", msg: null };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
-    register: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired
   };
 
@@ -19,7 +19,7 @@ class RegisterModal extends Component {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       //Check for Register Error (id from authActions.js)
-      if (error.id === "REGISTER_FAIL") {
+      if (error.id === "LOGIN_FAIL") {
         this.setState({ msg: error.msg.msg });
       } else {
         this.setState({ msg: null });
@@ -48,19 +48,9 @@ class RegisterModal extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, email, password } = this.state;
-
-    //Create User object
-    const newUser = {
-      name,
-      email,
-      password
-    };
-
-    //Attempt to register
-    this.props.register(newUser);
-
-    //this.handleClose();
+    const { email, password } = this.state;
+    const user = { email, password };
+    this.props.login(user);
   };
 
   render() {
@@ -68,7 +58,7 @@ class RegisterModal extends Component {
       <Modal
         trigger={
           <Dropdown.Item href="#" onClick={this.handleOpen}>
-            Register
+            Login
           </Dropdown.Item>
         }
         open={this.state.modalOpen}
@@ -81,16 +71,6 @@ class RegisterModal extends Component {
             <Message floating> {this.state.msg} </Message>
           ) : null}
           <Form onSubmit={this.onSubmit}>
-            <Form.Field>
-              <label style={{ color: "white" }}> Name</label>
-              <input
-                placeholder="Name"
-                name="name"
-                type="text"
-                id="name"
-                onChange={this.onChange}
-              />
-            </Form.Field>
             <Form.Field>
               <label style={{ color: "white" }}> E-Mail</label>
               <input
@@ -111,7 +91,7 @@ class RegisterModal extends Component {
                 onChange={this.onChange}
               />
             </Form.Field>
-            <Button type="submit">Register now</Button>
+            <Button type="submit">Login now</Button>
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -131,5 +111,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { register, clearErrors }
-)(RegisterModal);
+  { login, clearErrors }
+)(LoginModal);

@@ -3,6 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import { Dropdown, Menu } from "semantic-ui-react";
 import RegisterModal from "./auth/RegisterModal";
 import Logout from "./auth/Logout";
+import LoginModal from "./auth/LoginModal";
 
 class AppNavbar extends Component {
   state = {};
@@ -24,6 +25,7 @@ class AppNavbar extends Component {
               <Dropdown.Divider />
               <RegisterModal />
               <Dropdown.Divider />
+              <LoginModal />
               <Logout />
             </Dropdown.Menu>
           </Dropdown>
