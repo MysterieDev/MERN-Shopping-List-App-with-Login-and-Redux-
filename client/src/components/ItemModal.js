@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { addItem } from "../actions/itemActions";
-
+import { PropTypes } from "prop-types";
+import { get } from "mongoose";
 class ItemModal extends Component {
   state = { modalOpen: false, name: "" };
+
+  static propTypes = {
+    isAuthenticated: PropTypes.bool
+  };
 
   handleOpen = () => this.setState({ modalOpen: true });
 
@@ -27,18 +32,25 @@ class ItemModal extends Component {
     this.handleClose();
   };
 
+  getModalTrigger = () => {
+    if (this.props.isAuthenticated) {
+      return (
+        <Button
+          color="black"
+          onClick={this.handleOpen}
+          style={{ margin: "10px" }}
+        >
+          Add New Item
+        </Button>
+      );
+    } else {
+      return <h3>Welcome, please log in to manage items</h3>;
+    }
+  };
   render() {
     return (
       <Modal
-        trigger={
-          <Button
-            color="black"
-            onClick={this.handleOpen}
-            style={{ margin: "10px" }}
-          >
-            Add New Item
-          </Button>
-        }
+        trigger={this.getModalTrigger()}
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
@@ -70,7 +82,8 @@ class ItemModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  item: state.item
+  item: state.item,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(

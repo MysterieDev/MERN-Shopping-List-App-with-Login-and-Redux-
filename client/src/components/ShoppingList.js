@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Button, List } from "semantic-ui-react";
+import { Container, Button, List, Segment } from "semantic-ui-react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { getItems, deleteItem } from "../actions/itemActions";
@@ -7,6 +7,13 @@ import { PropTypes } from "prop-types";
 import ItemModal from "./ItemModal";
 
 class ShoppingList extends Component {
+  static propTypes = {
+    getItems: PropTypes.func.isRequired,
+    //item represents state (prop but we're mapping the state to the component property)
+    item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
+  };
+
   componentDidMount() {
     this.props.getItems();
   }
@@ -26,17 +33,23 @@ class ShoppingList extends Component {
             {items.map(({ _id, name }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <List.Item as="p">
-                  <Button
-                    negative
-                    icon="delete"
-                    style={{
-                      cursor: "grab",
-                      paddingRight: "5px",
-                      fontSize: "10px"
-                    }}
-                    onClick={this.onDeleteClick.bind(this, _id)}
-                  />
-                  {name}
+                  <Segment>
+                    {this.props.isAuthenticated ? (
+                      <Button
+                        negative
+                        icon="delete"
+                        style={{
+                          cursor: "grab",
+                          paddingRight: "5px",
+                          fontSize: "10px"
+                        }}
+                        onClick={this.onDeleteClick.bind(this, _id)}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {name}
+                  </Segment>
                 </List.Item>
               </CSSTransition>
             ))}
@@ -47,15 +60,10 @@ class ShoppingList extends Component {
   }
 }
 
-ShoppingList.propTypes = {
-  getItems: PropTypes.func.isRequired,
-  //item represents state (prop but we're mapping the state to the component property)
-  item: PropTypes.object.isRequired
-};
-
 const mapStatetoProps = state => ({
   //name "item" coming from reducer
-  item: state.item
+  item: state.item,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = { deleteItem, getItems };
